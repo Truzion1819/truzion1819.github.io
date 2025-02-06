@@ -2,32 +2,34 @@
 const audio = document.querySelector('audio.Explode');
 const audio2 = document.querySelector('audio.OhNo');
 const audio3 = document.querySelector('audio.trainNoise');
-const audio4 = document.querySelector('audio.crying');
 const audio5 = document.querySelector('audio.smash');
 const timerButton = document.getElementById('timerButton');
 
 
 
 
-import player from "./player.js";
-import Enemy from "./Enemy.js";
-import BulletController from "./BulletController.js";
+
+
+import player from "./player2.js";
+import Enemy from "./Enemy2.js";
+import BulletController from "./BulletController2.js";
 //import equationIndex from './player.js'
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 const button = document.querySelector("button.full");
+
 const timerDisplay = document.getElementById("timer");
 export let gameStarted = false;
 
 
 
 let isIncorrect = false;
-export let equations = ["6+3", 
-    "5+5", "2+2", "4*2", "12+2", "3*5","18+5","16+3", 
-    "10-3","7*3", "10*3", "29-3","2*3","5*5", "21+7",
-      "15*3","59-7","9+3", "3*3", "28*2","11*4","28+3","50-10"
-    ];
-
+//export let equations = ["256/2", 
+    //"36/3", "64/2+4 ", "9*3-2", "6+4*12", "9/3+1","13-6/2","12+12/2", 
+    //"321/3","9+8-3", "5+5*2", "3-3+5","92-10*1","4*8-5", "24/2+7"
+    //];
+    export let equations = ["256/2", 
+    "36/3"];
       console.log("Initial equations:", equations);
 
 let equationIndex = 0;
@@ -54,9 +56,9 @@ const imageurls = ['train1.png','train2.png','train3.png','train4.png',
     'train5.png','train6.png','train7.png','train8.png',
      'train9.png','train10.png','train11.png','train12.png','train13.png' ];
 
-let solutions= [9,8,15,4,10,19,23,14]
-let solutions2= [28,30,7,21,6,25,26,]
-let solutions3= [52,9,40,56,44,31,12,45]
+let solutions= [128,12,36,25,54,4,10,18]
+let solutions2= [107,14,15,5,82,27,19]
+
 const images = [];
 const train = new Image();
 train.src = 'bettertrain.png';
@@ -119,7 +121,7 @@ function shuffleArray(solutions) {
 
 shuffleArray(solutions)
 shuffleArray(solutions2)
-shuffleArray(solutions3)
+
 
 console.log(solutions)
 const enemies = [
@@ -140,14 +142,7 @@ const enemies = [
     new Enemy (550,190, "rgb(188,74,60)", solutions2[6]), 
     new Enemy (650,190, "rgb(188,74,60)", solutions2[0]), 
 
-    new Enemy (0,150, "rgb(188,74,60)", solutions3[1]), 
-    new Enemy (100,150, "rgb(188,74,60)", solutions3[2]), 
-    new Enemy (200,150, "rgb(188, 74, 60)", solutions3[3]), 
-    new Enemy (300,150, "rgb(188,74,60)", solutions3[4]), 
-    new Enemy (400,150, "rgb(188,74,60)", solutions3[5]), 
-    new Enemy (500,150, "rgb(188,74,60)", solutions3[6]), 
-    new Enemy (600,150, "rgb(188,74,60)", solutions3[7]), 
-    new Enemy (700,150, "rgb(188,74,60)", solutions3[0]),
+  
     new Enemy (800,800, "rgb(0, 0, 0)", ),
 ];
 
@@ -232,7 +227,17 @@ function gameLoop() {
                 
             }
             }
-            //console.log(equations)
+            let buttonCreated = false;
+            function createNewButton() {
+                if (!buttonCreated) {
+                    const levelbutton = document.createElement('button');
+                    levelbutton.textContent = 'New Level';
+                    levelbutton.addEventListener('click', () => {
+                        alert('Button clicked!');
+                   
+                    });
+                    document.body.appendChild(levelbutton); }}
+          
             if (equationIndex >= equations.length){
                 b += speed;
 
@@ -250,6 +255,8 @@ function gameLoop() {
                ctx.font = "100px A"
                 ctx.fillStyle = "red";
                 ctx.fillText ('YOU WIN', 100, 300);}
+                buttonCreated = true; 
+                createNewButton();
 
                
         });
@@ -276,7 +283,6 @@ function gameLoop() {
         ctx.fillText ('GAME OVER', 100, 300);
         father.src="pixelrat3.png";       
         ctx.drawImage (father,offsetc,offsetd)
-        
 
     }
     if(attempts == 2){
